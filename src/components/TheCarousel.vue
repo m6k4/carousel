@@ -18,9 +18,9 @@
         :width="width"
       />
     </div>
-    {{scrollAmount }} {{ (width + 8) * (products.length - elementsCountOnClientView)}}
+    {{scrollAmount }}
     <button 
-      v-if="scrollAmount < (width + 8) * (products.length - 1)"
+      v-if="scrollAmount < productDivLength"
       class="TheCarousel__button--right"
       @click="scrollRight"
     />
@@ -38,31 +38,37 @@ const {
 
 getProducts();
 
+const width = 200;
+const gapBetweenElements = 8;
+let scrollAmount = ref(0);
+
+
 const elementsCountOnClientView = computed(() => {
   return Math.floor(
-    (window.innerWidth - 8) / (width + 8)
+    (window.innerWidth - gapBetweenElements) / (width + gapBetweenElements)
   );
 });
 
-const width = 200;
-
-let scrollAmount = ref(0);
+const productDivLength = computed(() => {
+  return (width + gapBetweenElements) * (products.value.length - elementsCountOnClientView.value)
+});
 
 const scrollLeft = () => {
   document.getElementsByClassName('TheCarousel__items')[0].scrollTo({
-    left: scrollAmount.value - elementsCountOnClientView.value * (width + 8),
+    left: scrollAmount.value - elementsCountOnClientView.value * (width + gapBetweenElements),
     behavior: 'smooth'
   });
-  console.log(scrollAmount.value - elementsCountOnClientView.value * (width + 8));
-  scrollAmount.value -= elementsCountOnClientView.value * (width + 8);
+  scrollAmount.value -= elementsCountOnClientView.value * (width + gapBetweenElements);
+  scrollAmount.value = scrollAmount.value < 0 ? 0 : scrollAmount.value;
 };
 
 const scrollRight = () => {
   document.getElementsByClassName('TheCarousel__items')[0].scrollTo({
-    left: scrollAmount.value + elementsCountOnClientView.value * (width + 8),
+    left: scrollAmount.value + elementsCountOnClientView.value * (width + gapBetweenElements),
     behavior: 'smooth'
   });
-    scrollAmount.value += elementsCountOnClientView.value * (width + 8);
+    scrollAmount.value += elementsCountOnClientView.value * (width + gapBetweenElements);
+    scrollAmount.value = scrollAmount.value >= productDivLength.value ? productDivLength.value : scrollAmount.value;
 };
 
 </script>
