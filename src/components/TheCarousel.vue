@@ -2,11 +2,15 @@
   <div
     class="TheCarousel"
   >
-    <button
+    <span 
       v-if="scrollAmount > 0"
-      class="TheCarousel__button--left"
-      @click="scrollLeft"
-    />
+      class="TheCarousel__button left" 
+    >
+      <button
+        class="TheCarousel__button--left"
+        @click="scrollLeft"
+      />
+    </span>
     <div 
       id="carousel" 
       class="TheCarousel__items"
@@ -18,12 +22,16 @@
         :width="width"
       />
     </div>
-    {{scrollAmount }}
-    <button 
+    <span  
       v-if="scrollAmount < productDivLength"
-      class="TheCarousel__button--right"
-      @click="scrollRight"
-    />
+      class="TheCarousel__button right"
+    >
+      <button 
+       
+        class="TheCarousel__button--right"
+        @click="scrollRight"
+      />
+    </span>
   </div>
 </template>
 
@@ -38,7 +46,7 @@ const {
 
 getProducts();
 
-const width = 200;
+const width = 250;
 const gapBetweenElements = 8;
 let scrollAmount = ref(0);
 
@@ -75,51 +83,46 @@ const scrollRight = () => {
 
 <style lang="sass">
 .TheCarousel
+  background: #F4F8FC
   height: 430px
   position: relative
   padding-top: 20px
   padding-bottom: 20px
 
+
   &__button
-    background: blue
-    height: 50px
+    position: absolute
+    top: 50%
     width: 64px
     height: 64px
-    font-size: 0
-    border: 0.1px solid #767676
-    background-size: 32px
-    background-position: 50%
-    background-repeat: no-repeat
-    background-color: hsla(0,0%,100%,.5)
-    &:hover
+    &:hover > &--left
+      visibility: visible
       cursor: pointer
-
+    
+    &:hover > &--right
+      visibility: visible
+      cursor: pointer
+    
     &--left
+      visibility: hidden
+      background-color: hsla(0,0%,100%,.5)
+      height: 100%
+      width: 100%
       background-position: 50%
-      position: absolute
       border: 0.1px solid #767676
-      top: 50%
-      left: 0
-      width: 64px
-      height: 64px
       background-repeat: no-repeat
       background-image: url(https://lokalnie-prod-assets.storage.googleapis.com/ui/versions/f4bc5113/assets/arrow-left-s-line.9f589d46.svg)
-      &:hover
-        visibility: visible
         
     &--right
+      visibility: hidden
+      background-color: hsla(0,0%,100%,.5)
+      height: 100%
+      width: 100%
       background-position: 50%
-      position: absolute
       border: 0.1px solid #767676
-      top: 50%
-      right: 0
-      width: 64px
-      height: 64px
       background-repeat: no-repeat
-      transform: rotate(180deg) translateY(50%)
+      transform: rotate(180deg)
       background-image: url(https://lokalnie-prod-assets.storage.googleapis.com/ui/versions/f4bc5113/assets/arrow-left-s-line.9f589d46.svg)
-      &:hover
-        visibility: visible
 
   &__items
     display: flex
@@ -129,5 +132,14 @@ const scrollRight = () => {
     height: 100%
     padding-top: 20px
     padding-bottom: 20px
+  
+.right
+  position: absolute
+  right: 0
+
+.left
+  position: absolute
+  left: 0
+
 
 </style>

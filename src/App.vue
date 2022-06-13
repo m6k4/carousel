@@ -15,4 +15,8 @@ import TheCarousel from './components/TheCarousel.vue'
   color: #2c3e50;
   margin-top: 60px;
 }
+
+body {
+  background: #F4F8FC;
+}
 </style>

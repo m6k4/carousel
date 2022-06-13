@@ -51,7 +51,7 @@ const getCurrencyLabel = computed(() => {
 </script>
 <style lang="sass">
 .TheCarouselItem
-  background: lighten(gray, 30%)
+  background: #fff
   border-radius: 5px
   box-shadow: 0 2px 8px rgb(0 0 0 / 16%)
   color: #222
@@ -91,10 +91,10 @@ const getCurrencyLabel = computed(() => {
     background-position: 0 100%
     background-repeat: no-repeat
     
-
   &__footer-label
     margin-left: 20px
     font-size: 12px
     font-style: italic
+    display: block
 
 </style>
