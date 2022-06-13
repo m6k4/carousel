@@ -6,9 +6,7 @@
       v-if="scrollAmount > 0"
       class="TheCarousel__button--left"
       @click="scrollLeft"
-    >
-      lewo
-    </button>
+    />
     <div 
       id="carousel" 
       class="TheCarousel__items"
@@ -25,9 +23,7 @@
       v-if="scrollAmount < (width + 8) * (products.length - 1)"
       class="TheCarousel__button--right"
       @click="scrollRight"
-    >
-      prawo
-    </button>
+    />
   </div>
 </template>
 
@@ -81,16 +77,43 @@ const scrollRight = () => {
   &__button
     background: blue
     height: 50px
+    width: 64px
+    height: 64px
+    font-size: 0
+    border: 0.1px solid #767676
+    background-size: 32px
+    background-position: 50%
+    background-repeat: no-repeat
+    background-color: hsla(0,0%,100%,.5)
+    &:hover
+      cursor: pointer
 
     &--left
+      background-position: 50%
       position: absolute
+      border: 0.1px solid #767676
       top: 50%
       left: 0
-
+      width: 64px
+      height: 64px
+      background-repeat: no-repeat
+      background-image: url(https://lokalnie-prod-assets.storage.googleapis.com/ui/versions/f4bc5113/assets/arrow-left-s-line.9f589d46.svg)
+      &:hover
+        visibility: visible
+        
     &--right
+      background-position: 50%
       position: absolute
+      border: 0.1px solid #767676
       top: 50%
       right: 0
+      width: 64px
+      height: 64px
+      background-repeat: no-repeat
+      transform: rotate(180deg) translateY(50%)
+      background-image: url(https://lokalnie-prod-assets.storage.googleapis.com/ui/versions/f4bc5113/assets/arrow-left-s-line.9f589d46.svg)
+      &:hover
+        visibility: visible
 
   &__items
     display: flex

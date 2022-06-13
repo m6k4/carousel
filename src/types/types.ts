@@ -4,6 +4,13 @@ export interface SingleProduct {
     price: number;
 }
 
+export type SellingModeTypes = "buyNow" | "advertisement" | "auction";
+
+export enum SellingModeTypeEnum {
+    BUY_NOW = "buyNow",
+    ADVERTISEMENT = "advertisement",
+    AUCTION = "auction"
+}
 export interface Location {
     label: string;
 }
@@ -44,14 +51,14 @@ export interface Cart {
     active: boolean;
 }
 
-export interface Price2 {
-    amount: string;
-    currency: string;
-}
+// export interface Price2 {
+//     amount: string;
+//     currency: string;
+// }
 
 export interface Advertisement {
     active: boolean;
-    price: Price2;
+    price: Sale;
 }
 
 export interface Current {
@@ -60,7 +67,7 @@ export interface Current {
 }
 
 export interface Price3 {
-    current: Current;
+    current: Sale;
 }
 
 export interface Auction {
@@ -101,4 +108,5 @@ export interface ProductDTO {
     images: Array<Image>,
     location: Location,
     publication: Publication,
+    sellingMode: SellingMode
 }

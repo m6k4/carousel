@@ -10,13 +10,28 @@
         :src="product.getFirstImage().url"
       >
     </div>
-    {{ props.product.getName() }}
+    <div class="TheCarouselItem__container">
+      <div class="TheCarouselItem__name">
+        {{ product.getName() }}
+      </div>
+      <div class="TheCarouselItem__value">
+        <b>{{ product.getPrice()?.amount }} </b>
+        {{ getCurrencyLabel }}
+      </div>
+      <div class="TheCarouselItem__footer">
+        <span class="TheCarouselItem__footer-icon" />
+        <span class="TheCarouselItem__footer-label">
+          {{ product.getLocation().label }}
+        </span>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue';
+import { computed, PropType } from 'vue';
 import { Product } from './Product';
+import currencyMap from './currencyMap';
 
 // eslint-disable-next-line no-undef
 const props = defineProps({
@@ -28,6 +43,10 @@ const props = defineProps({
     type: Number,
     required: true
   }
+});
+
+const getCurrencyLabel = computed(() => {
+  return currencyMap.find(item => item.currency === props.product.getPrice()?.currency)?.label;
 });
 </script>
 <style lang="sass">
@@ -44,6 +63,38 @@ const props = defineProps({
     &__image
       height: 100%
 
+  &__container
+    padding: 16px 16px 8px 8px
+    text-align: left
+    display: flex
+    flex-direction: column
+    height: 225px
 
+  &__name
+    margin-top: 10px
+    font-weight: 400
+    margin-bottom: 8px
+    font-size: 16px
+    line-height: 1.5
+
+  &__footer
+    margin-top: auto
+    position: relative
+
+  &__footer-icon
+    height: 20px
+    width: 20px
+    bottom: 2px
+    position: absolute
+    background-image: url(https://lokalnie-prod-assets.storage.googleapis.com/ui/versions/f4bc5113/assets/map-pin-2.cfcfae57.svg)
+    background-size: auto 16px
+    background-position: 0 100%
+    background-repeat: no-repeat
+    
+
+  &__footer-label
+    margin-left: 20px
+    font-size: 12px
+    font-style: italic
 
 </style>

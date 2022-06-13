@@ -16,6 +16,7 @@ export default function useCarousel() {
                     images: dto.images,
                     location: dto.allegroLocally.location,
                     publication: dto.publication,
+                    sellingMode: dto.sellingMode,
                 }))
             ]));
     }

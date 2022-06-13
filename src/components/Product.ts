@@ -1,4 +1,4 @@
-import { Publication, Location, Image, ProductDTO } from "../types/types";
+import { Publication, Location, Image, ProductDTO, Sale, SellingMode, SellingModeTypeEnum, SellingModeTypes } from "../types/types";
 
 export class Product {
     constructor(
@@ -6,6 +6,7 @@ export class Product {
         private readonly images: Array<Image>,
         private readonly location: Location,
         private readonly publication: Publication,
+        private readonly sellingMode: SellingMode
     ) {}
 
     static fromDTO(dto: ProductDTO): Product {
@@ -14,6 +15,7 @@ export class Product {
             dto.images,
             dto.location,
             dto.publication,
+            dto.sellingMode
         );
     }
 
@@ -35,5 +37,24 @@ export class Product {
 
     getPublication(): Publication {
         return this.publication;
+    }
+
+    getPrice(): Sale | undefined {
+        switch(this.getSellingType()) {
+            case SellingModeTypeEnum.BUY_NOW:
+                return this.sellingMode.buyNow.price.sale;
+            case SellingModeTypeEnum.ADVERTISEMENT:
+                return this.sellingMode.advertisement.price;
+            case SellingModeTypeEnum.AUCTION:
+                return this.sellingMode.auction.price.current;
+        }
+    }
+
+    getSellingMode() : SellingMode {
+        return this.sellingMode;
+    }
+
+    getSellingType() {
+        return Object.keys(this.sellingMode)[0]
     }
 }
