@@ -14,8 +14,8 @@ This template should help get you started developing with Vue 3 and TypeScript i
 
 ### What TODO?
 
-- displaying all needed api data - 
+- displaying all needed api data 
 - adjusting styles to match the mockup, for example added "Add to favourites" button on position absolute
-- 
+- i know that scrolling with mobile touch is not fully functional. I should look for another way to check the scroll direction, or give a watch on the scrollend, but then I don't know if it would delay things
 
 I didn't use external api, because in cors settings only allegro domain is allowed
