@@ -13,6 +13,7 @@
     </span>
     <div 
       id="carousel" 
+      :scroll="handleScroll"
       class="TheCarousel__items"
     >
       <TheCarouselItem
@@ -35,9 +36,10 @@
   </div>
 </template>
 
-<script setup lang="ts">import { computed, ref } from 'vue';
+<script setup lang="ts">import { computed, onMounted, onUnmounted, ref } from 'vue';
 import useCarousel from '../composable/useCarousel';
 import TheCarouselItem from './TheCarouselItem.vue';
+import debounce from 'lodash/debounce';
 
 const {
   products,
@@ -49,7 +51,8 @@ getProducts();
 const width = 250;
 const gapBetweenElements = 8;
 let scrollAmount = ref(0);
-
+let lastTouchXEnd = 0
+let lastTouchXStart = 1
 
 const elementsCountOnClientView = computed(() => {
   return Math.floor(
@@ -78,6 +81,40 @@ const scrollRight = () => {
     scrollAmount.value += elementsCountOnClientView.value * (width + gapBetweenElements);
     scrollAmount.value = scrollAmount.value >= productDivLength.value ? productDivLength.value : scrollAmount.value;
 };
+
+const handleScroll = (event: WheelEvent) => {
+  if(event.deltaY > 0) {
+    scrollLeft();
+  } else {
+    scrollRight();
+  }
+}
+
+const handleTouchStart = (event: TouchEvent) => {
+  lastTouchXStart = event.changedTouches[0].screenX
+  if(lastTouchXStart < lastTouchXEnd) {
+    scrollLeft();
+  } else {
+    scrollRight();
+  }
+}
+
+const handleTouchEnd = (event: TouchEvent) => {
+  lastTouchXEnd = event.changedTouches[0].screenX
+}
+
+onMounted(() => {
+  window.addEventListener('wheel', debounce(handleScroll, 50));
+  window.addEventListener('touchstart', debounce(handleTouchStart, 50));
+  window.addEventListener('touchend', debounce(handleTouchEnd, 50));
+})
+
+onUnmounted(() => {
+  window.removeEventListener('wheel', debounce(handleScroll, 50));
+  window.removeEventListener('touchstart', debounce(handleTouchStart, 50));
+  window.removeEventListener('touchend', debounce(handleTouchEnd, 50));
+})
+
 
 </script>
 
